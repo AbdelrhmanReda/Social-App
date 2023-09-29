@@ -60,6 +60,9 @@ let updateProfile = asyncHandler(async (req, res) => {
  * @access  private
  ------------------------------------------------*/
 let uploadImg = asyncHandler(async(req,res)=>{
+  if(!req.file){
+    return res.status(400).json({message:"No file uploaded"})
+  }
   res.status(200).json({message:"Uploaded Succecfully"})
 })
 /***
