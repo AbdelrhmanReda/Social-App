@@ -20,7 +20,7 @@ const schema = mongoose.Schema({
   profileImg: {
     type: Object,
     default: {
-      url: "https://powerusers.microsoft.com/t5/image/serverpage/image-id/98171iCC9A58CAF1C9B5B9/image-size/large/is-moderation-mode/true?v=v2&px=999",
+      cloudUrl: "",
     },
   },
   isAdmin: {

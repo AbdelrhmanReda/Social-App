@@ -3,6 +3,8 @@ const { User, validateUpdateUser } = require("../model/Users.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const { cloudinaryUploadImage } = require("../utils/cloudinary");
+
 /**-----------------------------------------------
  * @desc    Get All users
  * @route   /api/
@@ -49,7 +51,8 @@ let updateProfile = asyncHandler(async (req, res) => {
         bio: req.body.bio,
       },
     },
-    { new: true }).select("-password");
+    { new: true }
+  ).select("-password");
   res.send(user);
 });
 
@@ -59,26 +62,27 @@ let updateProfile = asyncHandler(async (req, res) => {
  * @method  POST
  * @access  private
  ------------------------------------------------*/
-let uploadImg = asyncHandler(async(req,res)=>{
-  if(!req.file){
-    return res.status(400).json({message:"No file uploaded"})
+let uploadImg = asyncHandler(async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
   }
-  res.status(200).json({message:"Uploaded Succecfully"})
-})
+  const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
+  const result = await cloudinaryUploadImage(imagePath);
+
+  // const result = await cloudinary.uploader.upload(imagePath);
+  res.status(200).json({ message: "Uploaded Succecfully" });
+});
 /***
  * @desc    Delete User
  * @route   /user/:id
  * @method  DELETE
  *  @access  private (users and admin only)
  */
-let deleteUser = asyncHandler(async (req, res) => {
-  
-})
-
+let deleteUser = asyncHandler(async (req, res) => {});
 
 module.exports = {
   getAll,
   getProfile,
   updateProfile,
-  uploadImg
+  uploadImg,
 };
