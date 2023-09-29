@@ -66,11 +66,17 @@ let uploadImg = asyncHandler(async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
   }
-  const imagePath = path.join(__dirname, `../images/${req.file.filename}`);
+  const imagePath = path.join(__dirname, `../uploads/${req.file.filename}`);
   const result = await cloudinaryUploadImage(imagePath);
+  user.profileImg = {
+    url: result.secure_url,
+    publicId: result.public_id,
+  };
 
   // const result = await cloudinary.uploader.upload(imagePath);
   res.status(200).json({ message: "Uploaded Succecfully" });
+
+  
 });
 /***
  * @desc    Delete User
