@@ -14,25 +14,15 @@ const storage = multer.diskStorage({
     }
   },
 });
-// const fileFilter = async (req, file, cb) => {
-//   try {
-//     const buffer = await file.buffer;
-//     const fileTypeInfo = await fileType.fromBuffer(buffer);
-
-//     // Define the allowed file types
-//     const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
-
-//     if (allowedTypes.includes(fileTypeInfo.mime)) {
-//       cb(null, true);
-//     } else {
-//       cb(new Error("Invalid file type"));
-//     }
-//   } catch (error) {
-//     cb(error);
+// const fileFilter = (req, file, cb) => {
+//   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+//       cb(null, true)
+//   } else {
+//       //reject file
+//       cb({message: 'Unsupported file format'}, false)
 //   }
-// };
+// }
 
-// Create the multer upload instance with the configured options
 const upload = multer({
   storage: storage,
 
@@ -51,18 +41,3 @@ const upload = multer({
 });
 
 module.exports = upload;
-
-//   const isImage = file.mimetype.startsWith("image");
-//   if (isImage) {
-//     cb(null, true);
-//   } else {
-//     cb({ message: "Upload not supported file type..." }, false);
-//   }
-// },fileFilter: (req, file, cb) => {
-//   const allowedTypes = ["image/png", "image/jpeg", "image/gif"];
-//   if (allowedTypes.includes(file.mimetype)) {
-//     cb(null, true);
-//   } else {
-//     cb(new Error("Upload not supported file type..."), false);
-//   }
-// },
